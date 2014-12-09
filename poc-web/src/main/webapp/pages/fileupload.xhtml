@@ -1,0 +1,21 @@
+<ui:composition template="/templates/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">File Upload</ui:define>
+	<ui:define name="body">
+		<p:panel id="fileUpload">
+			
+				<div align="center">
+			  <p:growl id="messages" showDetail="true" />
+ 
+    <p:fileUpload update=":pocFrm:grlMsg" fileUploadListener="#{fileUploadView.fileUpload}"  sizeLimit="100000" description="Select Images"/>
+			 
+			</div>
+			
+				<f:facet name="footer">
+				<div align="center">
+					</div>
+				</f:facet>
+				
+		</p:panel>
+	</ui:define>
+</ui:composition>
+

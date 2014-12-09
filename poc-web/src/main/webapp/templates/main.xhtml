@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="title" /></title>
+	<h:outputStylesheet id="jquery_css_main" name="innoms.css" library="css" />
+
+</h:head>
+<h:body>
+	<h:form id="pocFrm" enctype="multipart/form-data" onkeypress="if( event.keyCode == 13){event.keyCode=0;}" acceptcharset="UTF-8">
+		<div class="menu">
+			<ui:insert name="menu" />
+		</div>
+		<div class="profile">
+			<ui:insert name="profile" />
+		</div>
+		<div class="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				<p:graphicImage library="images" name="ajax_loading_bar.gif" />
+			</p:dialog>
+			<p:growl id="grlMsg" showDetail="true" showSummary="false" />
+			<ui:insert name="body" />
+		</div>
+	</h:form>
+</h:body>
+</html>

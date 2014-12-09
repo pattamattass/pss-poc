@@ -1,0 +1,36 @@
+<ui:composition template="/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">File Downlaoding</ui:define>
+	<ui:define name="body">
+		<script type="text/javascript">
+			function start() {
+	    		PF('statusDialog').show();
+			}
+	 
+			function stop() {
+	   	 		PF('statusDialog').hide();
+			}
+		</script>
+		<p:panel id="filedownload">
+			<div align="center">
+				<p:dialog modal="true" widgetVar="statusDialog" header="Status"	draggable="false" closable="false" resizable="false">
+					<p:graphicImage library="images" name="ajax_loading_bar.gif" />
+				</p:dialog>
+				<p:inputText id="fileId" value="#{fileDownloadView.fileId}"></p:inputText>
+				<p:commandButton update=":pocFrm:grlMsg" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" actionListener="#{fileDownloadView.fileDownloadViewListener}"	acicon="ui-icon-arrowthick-1-s">
+					<p:fileDownload value="#{fileDownloadView.file}" />
+				</p:commandButton>
+			</div>
+
+			<f:facet name="footer">
+				<div align="center"></div>
+			</f:facet>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+

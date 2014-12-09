@@ -1,0 +1,77 @@
+.menu {
+	position: absolute;
+	top: 2% !important;
+	width: 99% !important;
+	height: 10% !important;
+}
+
+.content {
+	position: absolute;
+	top: 12% !important;
+	left: 20% !important;
+	width: 75% !important;
+}
+
+.profile {
+	position: absolute;
+	float: right !important;
+	top: 12% !important;
+	width: 15% !important;
+}
+
+.center {
+	align: center !important;
+	margin: 0 auto !important;
+}
+
+.ui-widget-content {
+	background: #ffffff !important;
+}
+
+.ui-panel .ui-panel-titlebar {
+	background: #55a616 !important;
+	color: #ffffff !important;
+}
+
+.ui-panelgrid .ui-panelgrid-footer {
+	background: #ffffff !important;
+}
+
+.ui-panelgrid-footer {
+	background: #ffffff !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	background: #55a616 !important;
+	color: #ffffff !important;
+}
+
+.ui-selectonemenu-label {
+	width: 100% !important;
+	overflow: visible !important;
+	text-align: left !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 12px !important;
+}
+
+.ui-button {
+	font-size: 12px !important;
+}
+
+.ui-panelgrid td {
+	border: 0px !important;
+	background-color: transparent;
+}
+
+.ui-panelgrid tr {
+	border: 0px !important;
+	background-color: transparent;
+}
+
+.ui-datatable.ui-widget {
+	width: auto !important;
+	overflow: auto !important;
+	display: inline-block;
+}
