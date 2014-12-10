@@ -6,7 +6,7 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/innomsdb">
 		</property>
 		<property name="username" value="root"></property>
-		<property name="password" value="root"></property>
+		<property name="password" value="Pa%5W0Rd"></property>
 	</bean>
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource">
