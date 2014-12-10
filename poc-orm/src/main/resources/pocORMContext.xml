@@ -3,7 +3,7 @@
 
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:mysql://localhost:3306/innomsdb">
+		<property name="url" value="jdbc:mysql://localhost:3306/pocdb">
 		</property>
 		<property name="username" value="root"></property>
 		<property name="password" value="Pa%5W0Rd"></property>
@@ -22,7 +22,7 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.pss.poc.orm.bean.PocFileUpload</value>
+				<value>com.pss.poc.orm.bean.FileUpload</value>
 			</list>
 		</property>
 	</bean>
@@ -30,7 +30,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean id="PocFileUploadDAO" class="com.pss.poc.orm.dao.PocFileUploadDAO">
+	<bean id="FileUploadDAO" class="com.pss.poc.orm.dao.FileUploadDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

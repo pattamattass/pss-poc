@@ -31,7 +31,7 @@ public class FileUploadController implements Serializable {
 	private static final long serialVersionUID = 7366365010692356971L;
 	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("poc-web");
 	private static final Logger LOGGER = Logger.getLogger(FileUploadController.class);
-	private static final String BASE_URL = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/pss-ws/pocupload/FileUploadService/";
+	private static final String BASE_URL = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/poc-ws/pocupload/FileUploadService/";
 
 	public void fileUpload(FileUploadEvent event) {
 		LOGGER.info("Class :: " + this.getClass() + " :: Method :: fileUpload");
