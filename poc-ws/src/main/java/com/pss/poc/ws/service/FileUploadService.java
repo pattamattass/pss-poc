@@ -13,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
@@ -25,20 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pss.poc.orm.bean.PocFileUpload;
 import com.pss.poc.orm.dao.PocFileUploadDAO;
- 
+
 @Path(value = "/FileUploadService")
 public class FileUploadService {
- 
+
 	private static final Logger LOGGER = Logger.getLogger(FileUploadService.class);
-	
+
 	private PocFileUploadDAO pocFileUploadDAO;
-	
-    @POST
-    @Path("/addfile")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Transactional
-    public Response uploadFile(MultipartBody body  ) {
-    	
+
+	@POST
+	@Path("/addfile")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Transactional
+	public Response uploadFile(MultipartBody body) {
+
 		try {
 			List<Attachment> attachments = body.getAllAttachments();
 			for (Attachment attachment : attachments) {
@@ -54,39 +53,39 @@ public class FileUploadService {
 				pocFileUpload.setFileType(attachment.getContentDisposition().getParameter("filetype"));
 				pocFileUploadDAO.save(pocFileUpload);
 			}
-			Response response=Response.ok("SUCCESS").build();
+			Response response = Response.ok("SUCCESS").build();
 			return response;
 		} catch (Exception e) {
 			LOGGER.error(e, e);
-			Response response=Response.ok(e.getMessage()).build();
-			 return response;
+			Response response = Response.ok(e.getMessage()).build();
+			return response;
 		}
-    }
-    
-    @POST
-    @Path("/downloadfile")
-    @Produces(MediaType.MULTIPART_FORM_DATA)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Transactional
-    public List<Attachment> downloadFile(MultipartBody body) {
-    	 List<Attachment> attachments = new ArrayList<Attachment>();
-    	List<Attachment> attachemtnsWithFieldId = body.getAllAttachments();
-           
-            try { 
-            	String fieldId="";
-            	if(attachemtnsWithFieldId!=null && attachemtnsWithFieldId.size()>0  )
-            		fieldId = IOUtils.toString(attachemtnsWithFieldId.get(0).getDataHandler().getInputStream(), "UTF-8");
-                PocFileUpload pocFileUpload=pocFileUploadDAO.findById(fieldId);
-    			ContentDisposition cd = new ContentDisposition("attachment;filename=" + pocFileUpload.getFileName()+";filetype="+pocFileUpload.getFileType());
-    			InputStream in = new ByteArrayInputStream(pocFileUpload.getFileBlob()); 
-    			Attachment attachment = new Attachment("id", in, cd);
-    			attachments.add(attachment);
-            } catch(Exception e) {
-              e.printStackTrace();
-            }
- 
-        return attachments;
-    }
+	}
+
+	@POST
+	@Path("/downloadfile")
+	@Produces(MediaType.MULTIPART_FORM_DATA)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Transactional
+	public List<Attachment> downloadFile(MultipartBody body) {
+		List<Attachment> attachments = new ArrayList<Attachment>();
+		List<Attachment> attachemtnsWithFieldId = body.getAllAttachments();
+
+		try {
+			String fieldId = "";
+			if (attachemtnsWithFieldId != null && attachemtnsWithFieldId.size() > 0)
+				fieldId = IOUtils.toString(attachemtnsWithFieldId.get(0).getDataHandler().getInputStream(), "UTF-8");
+			PocFileUpload pocFileUpload = pocFileUploadDAO.findById(fieldId);
+			ContentDisposition cd = new ContentDisposition("attachment;filename=" + pocFileUpload.getFileName() + ";filetype=" + pocFileUpload.getFileType());
+			InputStream in = new ByteArrayInputStream(pocFileUpload.getFileBlob());
+			Attachment attachment = new Attachment("id", in, cd);
+			attachments.add(attachment);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return attachments;
+	}
 
 	public PocFileUploadDAO getPocFileUploadDAO() {
 		return pocFileUploadDAO;

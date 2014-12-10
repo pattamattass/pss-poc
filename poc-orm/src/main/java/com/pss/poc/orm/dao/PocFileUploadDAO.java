@@ -1,15 +1,14 @@
 package com.pss.poc.orm.dao;
 
-import static org.hibernate.criterion.Example.create;
-
 import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pss.poc.orm.bean.PocFileUpload;
 
 /**
@@ -24,7 +23,7 @@ import com.pss.poc.orm.bean.PocFileUpload;
  * @author MyEclipse Persistence Tools
  */
 @Transactional
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "rawtypes" })
 public class PocFileUploadDAO {
 	private static final Logger log = Logger.getLogger(PocFileUploadDAO.class);
 	// property constants
@@ -56,24 +55,17 @@ public class PocFileUploadDAO {
 		}
 	}
 
-	 
-
 	public PocFileUpload findById(java.lang.String id) {
 		log.debug("getting InnomsFileUpload instance with id: " + id);
 		try {
-			PocFileUpload instance = (PocFileUpload) getCurrentSession().get("com.pss.poc.orm.bean.PocFileUpload", id);
+			PocFileUpload instance = (PocFileUpload) getCurrentSession().get(
+					"com.pss.poc.orm.bean.PocFileUpload", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;
 		}
 	}
-
-	 
-	 
-
-	 
-	 
 
 	public List findAll() {
 		log.debug("finding all InnomsFileUpload instances");
@@ -87,8 +79,8 @@ public class PocFileUploadDAO {
 		}
 	}
 
-	 
-	public static PocFileUploadDAO getFromApplicationContext(ApplicationContext ctx) {
+	public static PocFileUploadDAO getFromApplicationContext(
+			ApplicationContext ctx) {
 		return (PocFileUploadDAO) ctx.getBean("PocFileUploadDAO");
 	}
 }

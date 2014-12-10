@@ -13,6 +13,11 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.pss.poc</groupId>
+			<artifactId>poc-orm</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>${faces.version}</version>
@@ -30,7 +35,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
+		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>5.1</version>
@@ -133,7 +138,7 @@
 			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>pss-poc</finalName>
 		<plugins>
@@ -154,5 +159,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	 
+
 </project>

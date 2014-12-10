@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.mysql.jdbc.Blob;
-
 @Entity
 @Table(name="innoms_fileupload")
 public class PocFileUpload implements Serializable{

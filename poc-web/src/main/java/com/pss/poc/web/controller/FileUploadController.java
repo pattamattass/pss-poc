@@ -1,7 +1,5 @@
 package com.pss.poc.web.controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +17,14 @@ import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
 
 import com.pss.poc.web.util.PocWebHelper;
 
 @ManagedBean(name = "fileUploadView")
 @SessionScoped
-public class FileUploadController  implements Serializable{
-	
+@SuppressWarnings({ "unchecked", "unused" })
+public class FileUploadController implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -34,55 +32,50 @@ public class FileUploadController  implements Serializable{
 	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("poc-web");
 	private static final Logger LOGGER = Logger.getLogger(FileUploadController.class);
 	private static final String BASE_URL = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/pss-ws/pocupload/FileUploadService/";
-	 
-    public void fileUpload(FileUploadEvent event) {  
+
+	public void fileUpload(FileUploadEvent event) {
 		LOGGER.info("Class :: " + this.getClass() + " :: Method :: fileUpload");
 		try {
 			WebClient client = WebClient.create(BASE_URL + "addfile");
 			client.type("multipart/form-data");
 			List<Attachment> attachments = new ArrayList<Attachment>();
-			ContentDisposition cd = new ContentDisposition("attachment;filename=" + event.getFile().getFileName()+";filetype="+event.getFile().getContentType());
+			ContentDisposition cd = new ContentDisposition("attachment;filename=" + event.getFile().getFileName() + ";filetype=" + event.getFile().getContentType());
 			Attachment attachment = new Attachment("id", event.getFile().getInputstream(), cd);
 			attachments.add(attachment);
-			Response response= client.post(new MultipartBody(attachments));
+			Response response = client.post(new MultipartBody(attachments));
 			client.close();
-			if (response.getStatus()== 200) {
+			if (response.getStatus() == 200) {
 				PocWebHelper.addMessage("File Uploaded successfully", FacesMessage.SEVERITY_INFO);
-				
+
 			} else {
 				PocWebHelper.addMessage("File Uploading error :: " + response.getStatusInfo(), FacesMessage.SEVERITY_ERROR);
 			}
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e, e);
 			PocWebHelper.addMessage("File Uploading error :: " + e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 
-    }  
-    
-    
-    public void viewFiles()
-    {
-    	try{
-    		LOGGER.info("Class :: " + this.getClass() + " :: Method :: viewFiles");
+	}
+
+	public void viewFiles() {
+		try {
+			LOGGER.info("Class :: " + this.getClass() + " :: Method :: viewFiles");
 			WebClient client = WebClient.create(BASE_URL + "downloadfile");
 			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
 			List<Attachment> attachments = new ArrayList<Attachment>();
 			ContentDisposition cd = new ContentDisposition("attachment");
-//			Attachment attachment = new Attachment("id", stream, cd);
-//			attachments.add(attachment);
+			// Attachment attachment = new Attachment("id", stream, cd);
+			// attachments.add(attachment);
 			new MultipartBody(true);
-			attachments= (List<Attachment>) client.postAndGetCollection(new MultipartBody(true),Attachment.class);
-			
-			
+			attachments = (List<Attachment>) client.postAndGetCollection(new MultipartBody(true), Attachment.class);
+
 			client.close();
-    		
-    	}catch(Exception e)
-    	{
-    		
-    	}
-    	
-    }
-    
- 
+
+		} catch (Exception e) {
+
+		}
+
+	}
+
 }

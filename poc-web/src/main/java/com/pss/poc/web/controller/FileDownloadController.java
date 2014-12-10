@@ -24,56 +24,53 @@ import com.pss.poc.web.util.PocWebHelper;
 
 @ManagedBean(name = "fileDownloadView")
 @SessionScoped
-public class FileDownloadController implements Serializable{
+@SuppressWarnings("unchecked")
+public class FileDownloadController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 936148808349484797L;
 	private StreamedContent file;
 	private String fileId;
 	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("poc-web");
 	private static final Logger LOGGER = Logger.getLogger(FileUploadController.class);
 	private static final String BASE_URL = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/pss-ws/pocupload/FileUploadService/";
-	
-	 public void fileDownloadViewListener() {        
-	        InputStream stream=null;
-			try {
-				stream = new ByteArrayInputStream( fileId.getBytes());
-				fileId="";
-				WebClient client = WebClient.create(BASE_URL + "downloadfile");
-				client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
-				List<Attachment> attachments = new ArrayList<Attachment>();
-				ContentDisposition cd = new ContentDisposition("attachment");
-				Attachment attachment = new Attachment("id", stream, cd);
-				attachments.add(attachment);
-				attachments= (List<Attachment>) client.postAndGetCollection(new MultipartBody(attachments),Attachment.class);
-				file = new DefaultStreamedContent(attachments.get(0).getDataHandler().getInputStream(),attachments.get(0).getContentDisposition().getParameter("filetype"), attachments.get(0).getContentDisposition().getParameter("filename"));
-				
-				client.close();
-				PocWebHelper.addMessage("File Downloaded successfully", FacesMessage.SEVERITY_INFO);
-			} catch (Exception e) {
-				e.printStackTrace();
-				PocWebHelper.addMessage("File Downloading error :: " + e.getMessage(), FacesMessage.SEVERITY_ERROR);
-			}
-	       
-	    }
-	 
-	 public StreamedContent getFile() {
-			return file;
+
+	public void fileDownloadViewListener() {
+		InputStream stream = null;
+		try {
+			stream = new ByteArrayInputStream(fileId.getBytes());
+			fileId = "";
+			WebClient client = WebClient.create(BASE_URL + "downloadfile");
+			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
+			List<Attachment> attachments = new ArrayList<Attachment>();
+			ContentDisposition cd = new ContentDisposition("attachment");
+			Attachment attachment = new Attachment("id", stream, cd);
+			attachments.add(attachment);
+			attachments = (List<Attachment>) client.postAndGetCollection(new MultipartBody(attachments), Attachment.class);
+			file = new DefaultStreamedContent(attachments.get(0).getDataHandler().getInputStream(), attachments.get(0).getContentDisposition().getParameter("filetype"), attachments.get(0).getContentDisposition().getParameter("filename"));
+
+			client.close();
+			PocWebHelper.addMessage("File Downloaded successfully", FacesMessage.SEVERITY_INFO);
+		} catch (Exception e) {
+			LOGGER.error(e, e);
+			PocWebHelper.addMessage("File Downloading error :: " + e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 
-		public void setFile(StreamedContent file) {
-			this.file = file;
-		}
+	}
 
-		public String getFileId() {
-			return fileId;
-		}
+	public StreamedContent getFile() {
+		return file;
+	}
 
-		public void setFileId(String fileId) {
-			this.fileId = fileId;
-		}
-	    
+	public void setFile(StreamedContent file) {
+		this.file = file;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
 
 }

@@ -21,7 +21,7 @@
 					<p:graphicImage library="images" name="ajax_loading_bar.gif" />
 				</p:dialog>
 				<p:inputText id="fileId" value="#{fileDownloadView.fileId}"></p:inputText>
-				<p:commandButton update=":pocFrm:grlMsg" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" actionListener="#{fileDownloadView.fileDownloadViewListener}"	acicon="ui-icon-arrowthick-1-s">
+				<p:commandButton update=":pocFrm:grlMsg" value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" actionListener="#{fileDownloadView.fileDownloadViewListener}"	icon="ui-icon-arrowthick-1-s">
 					<p:fileDownload value="#{fileDownloadView.file}" />
 				</p:commandButton>
 			</div>
