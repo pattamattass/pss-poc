@@ -13,69 +13,70 @@ import javax.persistence.Table;
 @Table(name = "file_upload", catalog = "pocdb")
 public class FileUpload implements java.io.Serializable {
 
-	// Fields
+ 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1509868581400871849L;
 
-	private static final long serialVersionUID = -7546461283742893951L;
 	private String fileId;
-	private String fileName;
+	
 	private String fileType;
-	private Long fileSize;
-	private String fileBlob;
+	
+	private String fileName;
+	
 	private Timestamp fileDate;
+	
+	private byte[] fileBlob;
+	
+	private Long fileSize;
 
-	// Constructors
-
-	/** default constructor */
-	public FileUpload() {
-	}
-
-	/** minimal constructor */
-	public FileUpload(String fileId) {
-		this.fileId = fileId;
-	}
-
-	/** full constructor */
-	public FileUpload(String fileId, String fileName, String fileType, Long fileSize, String fileBlob, Timestamp fileDate) {
-		this.fileId = fileId;
-		this.fileName = fileName;
-		this.fileType = fileType;
-		this.fileSize = fileSize;
-		this.fileBlob = fileBlob;
-		this.fileDate = fileDate;
-	}
-
-	// Property accessors
 	@Id
 	@Column(name = "file_id", unique = true, nullable = false, length = 36)
 	public String getFileId() {
-		return this.fileId;
+		return fileId;
 	}
 
+	
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
 
+	@Column(name = "file_type", length = 999)
+	public String getFileType() {
+		return fileType;
+	}
+
+	
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
 	@Column(name = "file_name", length = 999)
 	public String getFileName() {
-		return this.fileName;
+		return fileName;
 	}
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	@Column(name = "file_type", length = 999)
-	public String getFileType() {
-		return this.fileType;
+	@Column(name = "file_date")
+	public Timestamp getFileDate() {
+		return fileDate;
 	}
 
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
+	public void setFileDate(Timestamp fileDate) {
+		this.fileDate = fileDate;
 	}
 
-	@Column(name = "file_size")
+	
+	 
+
+	@Column(name = "file_size", length = 20)
 	public Long getFileSize() {
-		return this.fileSize;
+		return fileSize;
 	}
 
 	public void setFileSize(Long fileSize) {
@@ -83,21 +84,18 @@ public class FileUpload implements java.io.Serializable {
 	}
 
 	@Column(name = "file_blob")
-	public String getFileBlob() {
-		return this.fileBlob;
+	public byte[] getFileBlob() {
+		return fileBlob;
 	}
 
-	public void setFileBlob(String fileBlob) {
+
+	public void setFileBlob(byte[] fileBlob) {
 		this.fileBlob = fileBlob;
 	}
-
-	@Column(name = "file_date", length = 19)
-	public Timestamp getFileDate() {
-		return this.fileDate;
-	}
-
-	public void setFileDate(Timestamp fileDate) {
-		this.fileDate = fileDate;
-	}
+	
+	
+	
+	
+	
 
 }
