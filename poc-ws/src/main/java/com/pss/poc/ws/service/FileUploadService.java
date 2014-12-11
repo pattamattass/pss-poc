@@ -46,10 +46,10 @@ public class FileUploadService {
 				byte[] bytes = IOUtils.toByteArray(stream);
 				FileUpload fileUpload = new FileUpload();
 				fileUpload.setFileId(UUID.randomUUID().toString());
-				fileUpload.setFileBlob(new String(bytes));
+				fileUpload.setFileBlob((bytes));
 				fileUpload.setFileDate(new Timestamp(System.currentTimeMillis()));
 				fileUpload.setFileName(attachment.getContentDisposition().getParameter("filename"));
-				fileUpload.setFileSize((long) bytes.length);
+				fileUpload.setFileSize((long)bytes.length);
 				fileUpload.setFileType(attachment.getContentDisposition().getParameter("filetype"));
 				fileUploadDAO.save(fileUpload);
 			}
@@ -77,7 +77,7 @@ public class FileUploadService {
 				fieldId = IOUtils.toString(attachemtnsWithFieldId.get(0).getDataHandler().getInputStream(), "UTF-8");
 			FileUpload fileUpload = fileUploadDAO.findById(fieldId);
 			ContentDisposition cd = new ContentDisposition("attachment;filename=" + fileUpload.getFileName() + ";filetype=" + fileUpload.getFileType());
-			InputStream in = new ByteArrayInputStream(fileUpload.getFileBlob().getBytes());
+			InputStream in = new ByteArrayInputStream(fileUpload.getFileBlob());
 			Attachment attachment = new Attachment("id", in, cd);
 			attachments.add(attachment);
 		} catch (Exception e) {
