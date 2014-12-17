@@ -23,6 +23,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.pss.poc.orm.bean.FileUpload</value>
+				<value>com.pss.poc.orm.bean.ClientDetails</value>
 			</list>
 		</property>
 	</bean>
@@ -30,7 +31,12 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean id="FileUploadDAO" class="com.pss.poc.orm.dao.FileUploadDAO">
+	<bean id="FileUploadDAO" class="com.pss.poc.orm.dao.FileUploadDAO">  
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ClientDetailsDAO" class="com.pss.poc.orm.dao.ClientDetailsDAO"> 
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
