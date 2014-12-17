@@ -6,6 +6,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -18,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.pss.poc.orm.bean.ClientDetails;
+import com.pss.poc.orm.dao.ClientDetailsDAO;
 import com.pss.poc.ws.model.ConsumerRegistration;
 
 import org.apache.cxf.helpers.IOUtils;
@@ -27,14 +30,13 @@ import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 
-@Path("/registerProvider")
+@Path(value = "/registerProvider")
 public class ThirdPartyRegistrationService {
-	private static final String DEFAULT_CLIENT_ID = "123456789";
-	private static final String DEFAULT_CLIENT_SECRET = "987654321";
 	
 	@Context
 	private UriInfo uriInfo;
 	private OAuthManager manager;
+	private ClientDetailsDAO clientDetailsDAO;
 	private Map<String, CachedOutputStream> appLogos = 
 	    new HashMap<String, CachedOutputStream>();
 	
@@ -82,6 +84,8 @@ public class ThirdPartyRegistrationService {
 		newClient.setApplicationDescription(appDesc);
 		newClient.setApplicationLogoUri(logoURI.toString());
 		newClient.setRedirectUris(Collections.singletonList(appRedirectURI));
+		
+		clientDetailsDAO.save(createClientDetails(clientId, clientSecret, appName, appURI, appRedirectURI));
 		manager.registerClient(newClient);
 		return new ConsumerRegistration(clientId, clientSecret);
 	}
@@ -116,15 +120,34 @@ public class ThirdPartyRegistrationService {
 	public String generateClientId(String appName, String appURI) {
 	    // if appURI is not allowed to contain paths, example, it can only be
 	    // www.mycompany.com, then appURI can be used as a consumer key
-		return DEFAULT_CLIENT_ID;
+		return System.currentTimeMillis()+"";
+	}
+	
+	public ClientDetails createClientDetails(String clientId,String clientScrt,String appName, String appURI, String redirectURI)
+	{
+		ClientDetails clientDetails=new ClientDetails();
+		clientDetails.setClientAppName(appName);
+		clientDetails.setClientid(clientId);
+		clientDetails.setClientUri(appURI);
+		clientDetails.setClientRedirectUri(redirectURI); 
+		
+		return clientDetails;
 	}
 	
 	public String generateClientSecret() {
-        return DEFAULT_CLIENT_SECRET;
+        return System.currentTimeMillis()+"";
     }
 	
 	public void setDataProvider(OAuthManager manager) {
 		this.manager = manager;
+	}
+
+	public ClientDetailsDAO getClientDetailsDAO() {
+		return clientDetailsDAO;
+	}
+
+	public void setClientDetailsDAO(ClientDetailsDAO clientDetailsDAO) {
+		this.clientDetailsDAO = clientDetailsDAO;
 	}
 }
 
