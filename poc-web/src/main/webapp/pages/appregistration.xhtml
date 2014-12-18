@@ -1,0 +1,44 @@
+<ui:composition template="/templates/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">Client Application Registration</ui:define>
+	<ui:define name="body">
+		<div style="align: center !important">
+		<p:panelGrid columns="2">
+			<p:column>
+				<p:outputLabel value="Application Name :" />
+			</p:column>
+
+			<p:column>
+				<p:inputText value="#{appRegistrationController.clientAppName}" />
+			</p:column>
+
+			<p:column>
+				<p:outputLabel value=" Application URI :" />
+			</p:column>
+
+			<p:column>
+				<p:inputText value="#{appRegistrationController.clientUri}"/>
+			</p:column>
+			
+			<p:column>
+				<p:outputLabel value=" Application Redirect URI :" />
+			</p:column>
+
+			<p:column>
+				<p:inputText value="#{appRegistrationController.clientRedirectUri}"/>
+			</p:column>
+
+		</p:panelGrid>
+		
+		<p:commandButton id="btnRegisterCreateSave"
+				update=":pocFrm:grlMsg "
+				icon="ui-icon-disk" value="Register"
+				actionListener="#{appRegistrationController.addClientDetails}" />
+	</div>
+	<f:facet name="footer">
+		<div style="align: center !important">
+			
+		</div>
+	</f:facet>
+	</ui:define>
+</ui:composition>
+

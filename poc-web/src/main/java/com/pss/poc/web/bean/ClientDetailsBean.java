@@ -13,6 +13,8 @@ public class ClientDetailsBean {
 	private String clientUri;
 	
 	private String clientRedirectUri;
+	
+	private String clientInfo;
 
 	
 	public String getClientid() {
@@ -52,6 +54,14 @@ public class ClientDetailsBean {
 
 	public void setClientRedirectUri(String clientRedirectUri) {
 		this.clientRedirectUri = clientRedirectUri;
+	}
+
+	public String getClientInfo() {
+		return clientInfo;
+	}
+
+	public void setClientInfo(String clientInfo) {
+		this.clientInfo = clientInfo;
 	}
 
 }
