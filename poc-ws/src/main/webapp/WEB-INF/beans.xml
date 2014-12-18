@@ -55,11 +55,6 @@
          <property name="realm" value="Reservations"/>
      </bean>
     
-    <bean id="socialSecurityContext" class="com.pss.poc.ws.auth.manager.SecurityContextFilter">
-    
-     </bean>
-    
-         
      
      <bean id="atServiceClient" factory-bean="atServiceClientFactory" factory-method="createWebClient"/>
      
@@ -104,13 +99,13 @@
   <property name="dataProvider" ref="oauthProvider"/>
 </bean>
  
-  <bean id="oauthClient" class="com.pss.poc.ws.auth.manager.OAuthClientManager">
+  <!-- <bean id="oauthClient" class="com.pss.poc.ws.auth.manager.OAuthClientManager">
          <property name="authorizationURI" value="http://localhost:8080/poc-ws/pocupload/authorize"/>
          <property name="accessTokenService" ref="atServiceClient"/>
-     </bean>
+     </bean> -->
  
  <bean id="FileUploadService" class="com.pss.poc.ws.service.FileUploadService">
- 		<property name="oAuthClientManager" ref="oauthClient"/>
+ 		<!-- <property name="oAuthClientManager" ref="oauthClient"/> -->
 		<property name="fileUploadDAO" ref="FileUploadDAO" />
 	</bean>
  

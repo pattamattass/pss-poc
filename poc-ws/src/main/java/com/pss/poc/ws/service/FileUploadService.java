@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pss.poc.orm.bean.FileUpload;
 import com.pss.poc.orm.dao.FileUploadDAO;
-import com.pss.poc.ws.auth.manager.OAuthClientManager;
+//import com.pss.poc.ws.auth.manager.OAuthClientManager;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Context;
@@ -39,7 +39,7 @@ public class FileUploadService {
 	private SecurityContext sc;
 	@Context
 	private UriInfo ui;
-	private OAuthClientManager manager;
+	//private OAuthClientManager manager;
 
 	@POST
 	@Path("/addfile")
@@ -104,7 +104,7 @@ public class FileUploadService {
 		this.fileUploadDAO = fileUploadDAO;
 	}
 	
-	public void setOAuthClientManager(OAuthClientManager manager) {
+	/*public void setOAuthClientManager(OAuthClientManager manager) {
 	    	this.manager = manager;
-	    }
+	    }*/
 }
