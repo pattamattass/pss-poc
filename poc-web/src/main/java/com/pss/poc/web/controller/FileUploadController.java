@@ -45,24 +45,7 @@ public class FileUploadController implements Serializable {
 		LOGGER.info("Class :: " + this.getClass() + " :: Method :: fileUpload");
 		try {
 			
-			
 			 WebClient client=WebClient.create(BASE_URL+"addfile");
-			/*String scope = OAuthConstants.AUTHORIZATION_CODE_GRANT;
-			URI uri =OAuthClientUtils.getAuthorizationURI(BASE_AUTH_URL, 
-                    "123456789",
-                    BASE_URL+"/complete",
-                    1+"",
-                    scope);*/
-			
-//			Response.seeOther(uri).build();
-	    	//OAuthAuthorizationData data = client.get(OAuthAuthorizationData.class);  
-		/*	
-			OAuthAuthorizationData data = client.get(OAuthAuthorizationData.class);    	
-	    	Object authenticityCookie = client.getResponse().getMetadata().getFirst("Set-Cookie");
-	    	System.out.println(authenticityCookie);
-	    	    	
-	    	Form authorizationResult = getAuthorizationResult(data);*/
-			
 			client.type("multipart/form-data");
 			client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
 			client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
@@ -76,7 +59,7 @@ public class FileUploadController implements Serializable {
 				PocWebHelper.addMessage("File Uploaded successfully", FacesMessage.SEVERITY_INFO);
 
 			} else {
-				PocWebHelper.addMessage("File Uploading error :: " + response.getStatusInfo(), FacesMessage.SEVERITY_ERROR);
+				PocWebHelper.addMessage("File Uploading error :: " +( response.getHeaderString("status")!=null ? response.getHeaderString("status") : response.getStatusInfo()), FacesMessage.SEVERITY_ERROR);
 			}
  
 		} catch (Exception e) {
