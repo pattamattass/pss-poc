@@ -129,6 +129,7 @@ public class ThirdPartyRegistrationService {
 		clientDetails.setClientAppName(appName);
 		clientDetails.setClientid(clientId);
 		clientDetails.setClientUri(appURI);
+		clientDetails.setClientScrt(clientScrt);
 		clientDetails.setClientRedirectUri(redirectURI); 
 		
 		return clientDetails;
