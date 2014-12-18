@@ -41,6 +41,8 @@ public class FileDownloadController implements Serializable {
 			fileId = "";
 			WebClient client = WebClient.create(BASE_URL + "downloadfile");
 			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
+			client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
+			client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
 			List<Attachment> attachments = new ArrayList<Attachment>();
 			ContentDisposition cd = new ContentDisposition("attachment");
 			Attachment attachment = new Attachment("id", stream, cd);
