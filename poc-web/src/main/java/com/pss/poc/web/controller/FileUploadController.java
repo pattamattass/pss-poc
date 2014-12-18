@@ -65,8 +65,8 @@ public class FileUploadController implements Serializable {
 	    	Form authorizationResult = getAuthorizationResult(data);*/
 			
 			client.type("multipart/form-data");
-			client.replaceHeader("clientId", "1418815865317");
-			client.replaceHeader("clientscrt", "1418815865317");
+			client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
+			client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
 			List<Attachment> attachments = new ArrayList<Attachment>();
 			ContentDisposition cd = new ContentDisposition("attachment;filename=" + event.getFile().getFileName() + ";filetype=" + event.getFile().getContentType());
 			Attachment attachment = new Attachment("id", event.getFile().getInputstream(), cd);
