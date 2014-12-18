@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 import com.pss.poc.web.util.PocWebHelper;
 import com.pss.poc.ws.model.ClientDetailsModel;
@@ -49,7 +50,9 @@ public class AppRegistrationController implements Serializable {
 			client.close();
 			 if (clientInfoModel.getClientStatuscode()==0) {
 				
-				 PocWebHelper.addMessage("", FacesMessage.SEVERITY_INFO);
+				 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registerd Succesfully", "Client Id :"+clientInfoModel.getClientId()+"</br> Client Secret :"+clientInfoModel.getClientScrt());
+		         
+			        RequestContext.getCurrentInstance().showMessageInDialog(message);
 
 			} else {
 				PocWebHelper.addMessage("Client Appplication Registration Failed" + clientInfoModel.getClientStatusInfo(), FacesMessage.SEVERITY_ERROR);
