@@ -10,6 +10,7 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<import resource="classpath:pocORMContext.xml" />
+	<bean id="jacksonMapper" class="com.pss.poc.ws.util.CustomObjectMapper" />
 	<http-conf:conduit name="*.http-conduit">
 		<http-conf:client Connection="close" AllowChunking="false" />
 	</http-conf:conduit>
@@ -45,9 +46,18 @@
            <ref bean="accessTokenService"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
-           <ref bean="jsonProvider"/>
+        <ref bean="jsonProvider"/>
            <ref bean="clientRegistrationConfirmView"/>
-        </jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+				<property name="mapper" ref="jacksonMapper" />
+			</bean>
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
      </jaxrs:server>
     
       <bean id="thirdPartySecurityContext" class="com.pss.poc.ws.thirdparty.SecurityContextFilter">
