@@ -109,7 +109,8 @@ public class SecurityContextFilter implements RequestHandler {
 	}
 
 	private Response createFaultResponse() {
-		return Response.ok("Service Authentication failed").build();
+		return /*Response.ok("Service Authentication failed").build();*/
+				Response.status(401).header("status", "Client Authentication Failed").build();
 	}
 
 
