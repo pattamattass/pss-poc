@@ -1,0 +1,23 @@
+<ui:composition template="/templates/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">Client Application Registration</ui:define>
+	<ui:define name="body">
+		<p:dataTable id="dtFileCont" widgetVar="dtFileCont" value="#{fileDownloadView.beans}" var="bean" rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="No Files Available">
+		<p:column headerText="File Name">
+			<p:outputLabel value="#{bean.fileName}" />
+		</p:column>
+
+		<p:column headerText="File Type">
+			<p:outputLabel value="#{bean.fileType}" />
+		</p:column>
+
+		 <p:column headerText="File Size in bytes">
+			<p:outputLabel value="#{bean.fileSize}" />
+		</p:column>
+		
+		<p:column headerText="File CreatedDate">
+			<p:outputLabel value="#{bean.fileDate}" />
+		</p:column>
+	</p:dataTable>
+	</ui:define>
+</ui:composition>
+
