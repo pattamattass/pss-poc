@@ -9,7 +9,7 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-	<import resource="classpath:pocORMContext.xml" />
+	<import resource="classpath:pocWSContext.xml" />
 	<bean id="jacksonMapper" class="com.pss.poc.ws.util.CustomObjectMapper" />
 	<http-conf:conduit name="*.http-conduit">
 		<http-conf:client Connection="close" AllowChunking="false" />
@@ -130,4 +130,26 @@
        </jaxrs:providers>
     </jaxrs:server> 
     
+    <jaxrs:server id="pocViewService" address="/pocView">
+       <jaxrs:serviceBeans>
+           <ref bean="FileViewService" />
+           <ref bean="authorizationService"/>
+       </jaxrs:serviceBeans>
+     <jaxrs:providers>
+       <ref bean="thirdPartySecurityContext"/>
+        <ref bean="jsonProvider"/>
+           <ref bean="clientRegistrationConfirmView"/>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+				<property name="mapper" ref="jacksonMapper" />
+			</bean>
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+    </jaxrs:server> 
+    
+      
 </beans>
