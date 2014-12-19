@@ -4,9 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -20,7 +22,9 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.pss.poc.web.bean.FileUploadBean;
 import com.pss.poc.web.util.PocWebHelper;
+import com.pss.poc.ws.model.FileUploadModel;
 
 @ManagedBean(name = "fileDownloadView")
 @SessionScoped
@@ -33,11 +37,26 @@ public class FileDownloadController implements Serializable {
 	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("poc-web");
 	private static final Logger LOGGER = Logger.getLogger(FileUploadController.class);
 	private static final String BASE_URL = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/poc-ws/pocupload/FileUploadService/";
-
+	private static final String BASE_URL_VIEW = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/poc-ws/pocView/FileViewService/";
+	private List<FileUploadBean> beans;
+	private FileUploadBean bean;
+	 
+	
+	@PostConstruct
+	public void loadData()
+	{
+		
+		 
+	}
 	public void fileDownloadViewListener() {
 		InputStream stream = null;
 		try {
-			stream = new ByteArrayInputStream(fileId.getBytes());
+			if(fileId!=null){
+				stream = new ByteArrayInputStream(fileId.getBytes());
+			}else{
+				stream = new ByteArrayInputStream(bean.getFileId().getBytes());
+			}
+			
 			fileId = "";
 			WebClient client = WebClient.create(BASE_URL + "downloadfile");
 			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
@@ -74,5 +93,42 @@ public class FileDownloadController implements Serializable {
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
+
+	public List<FileUploadBean> getBeans() {
+		
+		WebClient client=PocWebHelper.createCustomClient(BASE_URL_VIEW+"list");
+		client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
+		client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
+		Collection<? extends FileUploadModel> models = new ArrayList<FileUploadModel>(client.accept(MediaType.APPLICATION_JSON).getCollection(FileUploadModel.class));
+		client.close();
+		beans = new ArrayList<FileUploadBean>();
+		for (FileUploadModel model : models) {
+			FileUploadBean bean = new FileUploadBean();
+			
+			bean.setFileDate(model.getFileDate());
+			bean.setFileId(model.getFileId());
+			bean.setFileName(model.getFileName());
+			bean.setFileSize(model.getFileSize());
+			bean.setFileType(model.getFileType());
+			
+			beans.add(bean); 
+		}
+		
+		return beans;
+	}
+
+	public void setBeans(List<FileUploadBean> beans) {
+		this.beans = beans;
+	}
+
+	public FileUploadBean getBean() {
+		return bean;
+	}
+
+	public void setBean(FileUploadBean bean) {
+		this.bean = bean;
+	}
+
+	 
 
 }
