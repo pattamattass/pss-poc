@@ -9,11 +9,16 @@ import java.util.UUID;
 
 import javax.activation.DataHandler;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+//import com.pss.poc.ws.auth.manager.OAuthClientManager;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
@@ -24,10 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pss.poc.orm.bean.FileUpload;
 import com.pss.poc.orm.dao.FileUploadDAO;
-//import com.pss.poc.ws.auth.manager.OAuthClientManager;
-import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Context;
+import com.pss.poc.ws.model.FileUploadModel;
 
 @Path(value = "/FileUploadService")
 public class FileUploadService {
@@ -94,6 +96,32 @@ public class FileUploadService {
 		}
 
 		return attachments;
+	}
+	
+	
+	@GET
+	@Path("/list")
+	@Produces({ "application/json" })
+	@Transactional
+	public <T extends FileUploadModel> List<T> list() {
+		List<T> ret = new ArrayList();
+		try {
+			List batmod = this.fileUploadDAO.findAll();
+			for (Object object : batmod) {
+				FileUpload fileuload = (FileUpload) object;
+				FileUploadModel model = new FileUploadModel();
+				model.setFileDate(fileuload.getFileDate());
+				model.setFileId(fileuload.getFileId());
+				model.setFileName(fileuload.getFileName());
+				model.setFileSize(fileuload.getFileSize());
+				model.setFileType(fileuload.getFileType());
+				
+				ret.add((T) model);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e, e);
+		}
+		return ret;
 	}
 
 	public FileUploadDAO getFileUploadDAO() {
