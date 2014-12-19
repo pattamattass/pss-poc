@@ -27,7 +27,6 @@ import com.pss.poc.orm.bean.ClientDetails;
 import com.pss.poc.orm.dao.ClientDetailsDAO;
 import com.pss.poc.ws.model.ClientDetailsModel;
 import com.pss.poc.ws.model.ClientInfoModel;
-import com.pss.poc.ws.model.ConsumerRegistration;
 
 @Path(value = "/registerProvider")
 public class ThirdPartyRegistrationService {
