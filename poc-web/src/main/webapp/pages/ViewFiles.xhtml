@@ -1,23 +1,74 @@
 <ui:composition template="/templates/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
-	<ui:define name="title">Client Application Registration</ui:define>
+	<ui:define name="title">View Files</ui:define>
 	<ui:define name="body">
-		<p:dataTable id="dtFileCont" widgetVar="dtFileCont" value="#{fileDownloadView.beans}" var="bean" rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="No Files Available">
-		<p:column headerText="File Name">
-			<p:outputLabel value="#{bean.fileName}" />
-		</p:column>
+	
+		<script type="text/javascript">
+			function start() {
+	    		PF('statusDialog').show();
+			}
+	 
+			function stop() {
+	   	 		PF('statusDialog').hide();
+			}
+		</script>
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status"	draggable="false" closable="false" resizable="false">
+					<p:graphicImage library="images" name="ajax_loading_bar.gif" />
+				</p:dialog>
+		 
+	
+	 <p:dataGrid var="bean" value="#{fileDownloadView.beans}" columns="3" layout="grid"
+        rows="12" paginator="true" id="files"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="6,12,16">
+ 
+        <f:facet name="header">
+            View File Details
+        </f:facet>
 
-		<p:column headerText="File Type">
-			<p:outputLabel value="#{bean.fileType}" />
-		</p:column>
+			<p:panel header="#{bean.fileId}" style="text-align:center">
+				<p:panelGrid columns="2">
+				<p:column  >
+						<p:outputLabel value="File Name" />
+					</p:column>
+				
+					<p:column headerText="File Name">
+						<p:outputLabel value="#{bean.fileName}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="File Type :" />
+					</p:column>
+					<p:column headerText="File Type">
+						<p:outputLabel value="#{bean.fileType}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="File Size in bytes :" />
+					</p:column>
+					<p:column headerText="File Size in bytes">
+						<p:outputLabel value="#{bean.fileSize}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="File CreatedDate :" />
+					</p:column>
+					<p:column headerText="File CreatedDate">
+						<p:outputLabel value="#{bean.fileDate}" />
+					</p:column>
+				</p:panelGrid>
+				 
 
-		 <p:column headerText="File Size in bytes">
-			<p:outputLabel value="#{bean.fileSize}" />
-		</p:column>
-		
-		<p:column headerText="File CreatedDate">
-			<p:outputLabel value="#{bean.fileDate}" />
-		</p:column>
-	</p:dataTable>
+					<p:commandButton update=":pocFrm:grlMsg" value="Download"
+						ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+						actionListener="#{fileDownloadView.fileDownloadViewListener}"
+						icon="ui-icon-arrowthick-1-s">
+						<p:fileDownload value="#{fileDownloadView.file}" />
+						<f:setPropertyActionListener target="#{fileDownloadView.bean}"
+							value="#{bean}" />
+					</p:commandButton>
+				 
+			</p:panel>
+
+		</p:dataGrid>
+	
+	
 	</ui:define>
 </ui:composition>
 
