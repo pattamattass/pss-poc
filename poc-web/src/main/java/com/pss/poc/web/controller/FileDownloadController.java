@@ -40,23 +40,21 @@ public class FileDownloadController implements Serializable {
 	private static final String BASE_URL_VIEW = "http://" + BUNDLE.getString("ws.host") + ":" + BUNDLE.getString("ws.port") + "/poc-ws/pocView/FileViewService/";
 	private List<FileUploadBean> beans;
 	private FileUploadBean bean;
-	 
-	
+
 	@PostConstruct
-	public void loadData()
-	{
-		
-		 
+	public void loadData() {
+
 	}
+
 	public void fileDownloadViewListener() {
 		InputStream stream = null;
 		try {
-			if(fileId!=null){
+			if (fileId != null) {
 				stream = new ByteArrayInputStream(fileId.getBytes());
-			}else{
+			} else {
 				stream = new ByteArrayInputStream(bean.getFileId().getBytes());
 			}
-			
+
 			fileId = "";
 			WebClient client = WebClient.create(BASE_URL + "downloadfile");
 			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
@@ -95,8 +93,8 @@ public class FileDownloadController implements Serializable {
 	}
 
 	public List<FileUploadBean> getBeans() {
-		
-		WebClient client=PocWebHelper.createCustomClient(BASE_URL_VIEW+"list");
+
+		WebClient client = PocWebHelper.createCustomClient(BASE_URL_VIEW + "list");
 		client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
 		client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
 		Collection<? extends FileUploadModel> models = new ArrayList<FileUploadModel>(client.accept(MediaType.APPLICATION_JSON).getCollection(FileUploadModel.class));
@@ -104,16 +102,16 @@ public class FileDownloadController implements Serializable {
 		beans = new ArrayList<FileUploadBean>();
 		for (FileUploadModel model : models) {
 			FileUploadBean bean = new FileUploadBean();
-			
+
 			bean.setFileDate(model.getFileDate());
 			bean.setFileId(model.getFileId());
 			bean.setFileName(model.getFileName());
 			bean.setFileSize(model.getFileSize());
 			bean.setFileType(model.getFileType());
-			
-			beans.add(bean); 
+
+			beans.add(bean);
 		}
-		
+
 		return beans;
 	}
 
@@ -128,7 +126,5 @@ public class FileDownloadController implements Serializable {
 	public void setBean(FileUploadBean bean) {
 		this.bean = bean;
 	}
-
-	 
 
 }

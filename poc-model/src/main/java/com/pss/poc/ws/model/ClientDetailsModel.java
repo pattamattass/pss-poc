@@ -6,16 +6,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ClientDetailsModel {
 
 	private String clientid;
-	
+
 	private String clientScrt;
-	
+
 	private String clientAppName;
-	
+
 	private String clientUri;
-	
+
 	private String clientRedirectUri;
 
-	
 	public String getClientid() {
 		return clientid;
 	}
@@ -23,6 +22,7 @@ public class ClientDetailsModel {
 	public void setClientid(String clientid) {
 		this.clientid = clientid;
 	}
+
 	public String getClientScrt() {
 		return clientScrt;
 	}

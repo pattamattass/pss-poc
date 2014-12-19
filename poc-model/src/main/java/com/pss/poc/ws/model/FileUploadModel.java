@@ -4,25 +4,23 @@ import java.sql.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="FileUploadDetailsModel")
+@XmlRootElement(name = "FileUploadDetailsModel")
 public class FileUploadModel {
-	
 
 	private String fileId;
-	
+
 	private String fileType;
-	
+
 	private String fileName;
-	
+
 	private Timestamp fileDate;
-	
+
 	private Long fileSize;
 
 	public String getFileId() {
 		return fileId;
 	}
 
-	
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
@@ -31,7 +29,6 @@ public class FileUploadModel {
 		return fileType;
 	}
 
-	
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
@@ -52,9 +49,6 @@ public class FileUploadModel {
 		this.fileDate = fileDate;
 	}
 
-	
-	 
-
 	public Long getFileSize() {
 		return fileSize;
 	}
@@ -62,6 +56,5 @@ public class FileUploadModel {
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	}
-
 
 }

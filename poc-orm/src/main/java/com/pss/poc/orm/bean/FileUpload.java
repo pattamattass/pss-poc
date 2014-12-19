@@ -1,6 +1,7 @@
 package com.pss.poc.orm.bean;
 
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,23 +14,21 @@ import javax.persistence.Table;
 @Table(name = "file_upload", catalog = "pocdb")
 public class FileUpload implements java.io.Serializable {
 
- 
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1509868581400871849L;
 
 	private String fileId;
-	
+
 	private String fileType;
-	
+
 	private String fileName;
-	
+
 	private Timestamp fileDate;
-	
+
 	private byte[] fileBlob;
-	
+
 	private Long fileSize;
 
 	@Id
@@ -38,7 +37,6 @@ public class FileUpload implements java.io.Serializable {
 		return fileId;
 	}
 
-	
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
@@ -48,7 +46,6 @@ public class FileUpload implements java.io.Serializable {
 		return fileType;
 	}
 
-	
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
@@ -71,9 +68,6 @@ public class FileUpload implements java.io.Serializable {
 		this.fileDate = fileDate;
 	}
 
-	
-	 
-
 	@Column(name = "file_size", length = 20)
 	public Long getFileSize() {
 		return fileSize;
@@ -88,14 +82,8 @@ public class FileUpload implements java.io.Serializable {
 		return fileBlob;
 	}
 
-
 	public void setFileBlob(byte[] fileBlob) {
 		this.fileBlob = fileBlob;
 	}
-	
-	
-	
-	
-	
 
 }

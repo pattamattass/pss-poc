@@ -2,26 +2,22 @@ package com.pss.poc.web.bean;
 
 import java.sql.Timestamp;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class FileUploadBean {
-	
 
 	private String fileId;
-	
+
 	private String fileType;
-	
+
 	private String fileName;
-	
+
 	private Timestamp fileDate;
-	
+
 	private Long fileSize;
 
 	public String getFileId() {
 		return fileId;
 	}
 
-	
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
@@ -30,7 +26,6 @@ public class FileUploadBean {
 		return fileType;
 	}
 
-	
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
@@ -51,9 +46,6 @@ public class FileUploadBean {
 		this.fileDate = fileDate;
 	}
 
-	
-	 
-
 	public Long getFileSize() {
 		return fileSize;
 	}
@@ -61,6 +53,5 @@ public class FileUploadBean {
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	}
-
 
 }

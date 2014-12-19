@@ -32,6 +32,7 @@ import com.pss.poc.orm.dao.FileUploadDAO;
 import com.pss.poc.ws.model.FileUploadModel;
 
 @Path(value = "/FileUploadService")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class FileUploadService {
 
 	private static final Logger LOGGER = Logger.getLogger(FileUploadService.class);
@@ -41,7 +42,8 @@ public class FileUploadService {
 	private SecurityContext sc;
 	@Context
 	private UriInfo ui;
-	//private OAuthClientManager manager;
+
+	// private OAuthClientManager manager;
 
 	@POST
 	@Path("/addfile")
@@ -60,7 +62,7 @@ public class FileUploadService {
 				fileUpload.setFileBlob((bytes));
 				fileUpload.setFileDate(new Timestamp(System.currentTimeMillis()));
 				fileUpload.setFileName(attachment.getContentDisposition().getParameter("filename"));
-				fileUpload.setFileSize((long)bytes.length);
+				fileUpload.setFileSize((long) bytes.length);
 				fileUpload.setFileType(attachment.getContentDisposition().getParameter("filetype"));
 				fileUploadDAO.save(fileUpload);
 			}
@@ -97,8 +99,7 @@ public class FileUploadService {
 
 		return attachments;
 	}
-	
-	
+
 	@GET
 	@Path("/list")
 	@Produces({ "application/json" })
@@ -115,7 +116,7 @@ public class FileUploadService {
 				model.setFileName(fileuload.getFileName());
 				model.setFileSize(fileuload.getFileSize());
 				model.setFileType(fileuload.getFileType());
-				
+
 				ret.add((T) model);
 			}
 		} catch (Exception e) {
@@ -131,8 +132,9 @@ public class FileUploadService {
 	public void setFileUploadDAO(FileUploadDAO fileUploadDAO) {
 		this.fileUploadDAO = fileUploadDAO;
 	}
-	
-	/*public void setOAuthClientManager(OAuthClientManager manager) {
-	    	this.manager = manager;
-	    }*/
+
+	/*
+	 * public void setOAuthClientManager(OAuthClientManager manager) {
+	 * this.manager = manager; }
+	 */
 }

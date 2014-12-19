@@ -1,22 +1,19 @@
 package com.pss.poc.web.bean;
 
-
 public class ClientDetailsBean {
-	
 
 	private String clientid;
-	
+
 	private String clientScrt;
-	
+
 	private String clientAppName;
-	
+
 	private String clientUri;
-	
+
 	private String clientRedirectUri;
-	
+
 	private String clientInfo;
 
-	
 	public String getClientid() {
 		return clientid;
 	}
@@ -24,6 +21,7 @@ public class ClientDetailsBean {
 	public void setClientid(String clientid) {
 		this.clientid = clientid;
 	}
+
 	public String getClientScrt() {
 		return clientScrt;
 	}

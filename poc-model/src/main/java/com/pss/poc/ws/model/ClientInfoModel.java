@@ -3,11 +3,11 @@ package com.pss.poc.ws.model;
 public class ClientInfoModel {
 
 	private String clientId;
-	
+
 	private String clientScrt;
-	
+
 	private Integer clientStatuscode;
-	
+
 	private String clientStatusInfo;
 
 	public String getClientId() {

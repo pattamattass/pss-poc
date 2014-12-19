@@ -1,7 +1,6 @@
 package com.pss.poc.web.controller;
 
 import java.io.Serializable;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,9 +19,7 @@ import org.apache.cxf.jaxrs.ext.form.Form;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
-import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
 import org.apache.cxf.rs.security.oauth2.common.OAuthAuthorizationData;
-import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 
@@ -44,8 +41,8 @@ public class FileUploadController implements Serializable {
 	public void fileUpload(FileUploadEvent event) {
 		LOGGER.info("Class :: " + this.getClass() + " :: Method :: fileUpload");
 		try {
-			
-			 WebClient client=WebClient.create(BASE_URL+"addfile");
+
+			WebClient client = WebClient.create(BASE_URL + "addfile");
 			client.type("multipart/form-data");
 			client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
 			client.replaceHeader("clientscrt", BUNDLE.getString("ws.clientsecret"));
@@ -55,50 +52,45 @@ public class FileUploadController implements Serializable {
 			attachments.add(attachment);
 			Response response = client.post(new MultipartBody(attachments));
 			client.close();
-			 if (response.getStatus() == 200) {
+			if (response.getStatus() == 200) {
 				PocWebHelper.addMessage("File Uploaded successfully", FacesMessage.SEVERITY_INFO);
 
 			} else {
-				PocWebHelper.addMessage("File Uploading error :: " +( response.getHeaderString("status")!=null ? response.getHeaderString("status") : response.getStatusInfo()), FacesMessage.SEVERITY_ERROR);
+				PocWebHelper.addMessage("File Uploading error :: " + (response.getHeaderString("status") != null ? response.getHeaderString("status") : response.getStatusInfo()), FacesMessage.SEVERITY_ERROR);
 			}
- 
+
 		} catch (Exception e) {
 			LOGGER.error(e, e);
 			PocWebHelper.addMessage("File Uploading error :: " + e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 
 	}
-	
-	
-	  private WebClient createClient(String address, String userName, String password) {
-	    	
-		  
-		  JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
-	    	bean.setAddress(address);
-	    	bean.setUsername(userName);
-	    	bean.setPassword(password);
-	    	
-	    	bean.getOutInterceptors().add(new LoggingOutInterceptor());
-	    	bean.getInInterceptors().add(new LoggingInInterceptor());
-	    	return bean.createWebClient();
-	    	 
-	    	
-	    	 
-	    }
-	  
-	  
-	  private Form getAuthorizationResult(OAuthAuthorizationData data) {
-	        Form form = new Form();
-	        form.set("client_id", data.getClientId());
-	        form.set("state", data.getState());
-	        form.set("scope", data.getProposedScope());
-	        form.set("redirect_uri", data.getRedirectUri());
-	        // TODO: get the user confirmation, using a popup window or a blocking cmd input
-	        form.set("oauthDecision", "allow");
-	        form.set("session_authenticity_token", data.getAuthenticityToken());
-	        return form;
-	    }
-	
+
+	private WebClient createClient(String address, String userName, String password) {
+
+		JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
+		bean.setAddress(address);
+		bean.setUsername(userName);
+		bean.setPassword(password);
+
+		bean.getOutInterceptors().add(new LoggingOutInterceptor());
+		bean.getInInterceptors().add(new LoggingInInterceptor());
+		return bean.createWebClient();
+
+	}
+
+	private Form getAuthorizationResult(OAuthAuthorizationData data) {
+		Form form = new Form();
+		form.set("client_id", data.getClientId());
+		form.set("state", data.getState());
+		form.set("scope", data.getProposedScope());
+		form.set("redirect_uri", data.getRedirectUri());
+		// TODO: get the user confirmation, using a popup window or a blocking
+		// cmd input
+		form.set("oauthDecision", "allow");
+		form.set("session_authenticity_token", data.getAuthenticityToken());
+		return form;
+	}
 
 	public void viewFiles() {
 		try {
