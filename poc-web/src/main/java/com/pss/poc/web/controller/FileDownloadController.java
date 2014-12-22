@@ -46,16 +46,17 @@ public class FileDownloadController implements Serializable {
 
 	}
 
-	public void fileDownloadViewListener() {
+	public void fileDownloadViewListener(FileUploadBean bean) {
 		InputStream stream = null;
 		try {
-			if (fileId != null) {
+			if (fileId != null && !fileId.trim().equalsIgnoreCase("")) {
 				stream = new ByteArrayInputStream(fileId.getBytes());
+				fileId = "";
 			} else {
 				stream = new ByteArrayInputStream(bean.getFileId().getBytes());
 			}
 
-			fileId = "";
+			
 			WebClient client = WebClient.create(BASE_URL + "downloadfile");
 			client.type("multipart/form-data").accept(MediaType.MULTIPART_FORM_DATA);
 			client.replaceHeader("clientId", BUNDLE.getString("ws.clientid"));
@@ -73,7 +74,7 @@ public class FileDownloadController implements Serializable {
 			LOGGER.error(e, e);
 			PocWebHelper.addMessage("File Downloading error :: " + e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
-
+		 
 	}
 
 	public StreamedContent getFile() {

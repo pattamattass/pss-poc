@@ -55,13 +55,12 @@
 				</p:panelGrid>
 				 
 
-					<p:commandButton update=":pocFrm:grlMsg" value="Download"
+					<p:commandButton update=":pocFrm:grlMsg:files" value="Download"
 						ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
-						actionListener="#{fileDownloadView.fileDownloadViewListener}"
+						actionListener="#{fileDownloadView.fileDownloadViewListener(bean)}"
 						icon="ui-icon-arrowthick-1-s">
 						<p:fileDownload value="#{fileDownloadView.file}" />
-						<f:setPropertyActionListener target="#{fileDownloadView.bean}"
-							value="#{bean}" />
+						
 					</p:commandButton>
 				 
 			</p:panel>
