@@ -14,7 +14,10 @@
 		<p:dialog modal="true" widgetVar="statusDialog" header="Status"	draggable="false" closable="false" resizable="false">
 					<p:graphicImage library="images" name="ajax_loading_bar.gif" />
 				</p:dialog>
-		 
+		 <p:commandButton value="export Ideas to pdf" actionListener="#{fileDownloadView.exportIdeaToPdf}" ajax="false"></p:commandButton>
+		<p:commandButton value="export  Challenges to pdf" actionListener="#{fileDownloadView.exportChallengeToPdf}" ajax="false"></p:commandButton>
+		<p:commandButton value="export  Solutions to pdf" actionListener="#{fileDownloadView.exportSolutionToPdf}" ajax="false"></p:commandButton>
+		<p:commandButton value="export Claims to pdf" actionListener="#{fileDownloadView.exportClaimToPdf}" ajax="false"></p:commandButton>
 	
 	 <p:dataGrid var="bean" value="#{fileDownloadView.beans}" columns="3" layout="grid"
         rows="12" paginator="true" id="files"
@@ -66,7 +69,7 @@
 			</p:panel>
 
 		</p:dataGrid>
-	
+		
 	
 	</ui:define>
 </ui:composition>
